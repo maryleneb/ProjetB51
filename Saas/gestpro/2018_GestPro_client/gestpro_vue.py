@@ -23,6 +23,7 @@ class Vue():
         self.modes={}
         self.modecourant=None
         self.cadreactif=None
+        self.creermenu()
         self.creercadres()
         self.changecadre(self.cadresplash)
         
@@ -46,6 +47,54 @@ class Vue():
             self.listemodules.insert(END,i)
         self.changecadre(self.cadrecentral)
         
+    def creermenu(self):
+
+        self.menubar = Menu(self.root)
+
+        self.filemenu = Menu(self.menubar, tearoff=0)
+        
+        self.filemenu = Menu(self.menubar, tearoff=0)
+        self.filemenu.add_command(label="Nouveau Projet", command=self.hello)
+        self.filemenu.add_command(label="Ouvrir", command=self.hello)
+        self.filemenu.add_command(label="Enregistrer", command=self.hello)
+        self.filemenu.add_command(label="Enregistrer sous ...", command=self.hello)
+        self.filemenu.add_separator()
+        self.filemenu.add_command(label="Fermer", command=self.root.quit)
+        self.menubar.add_cascade(label="Fichier", menu=self.filemenu)
+        
+        self.editmenu = Menu(self.menubar, tearoff=0)
+        self.editmenu.add_command(label="Undo", command=self.hello)
+        self.editmenu.add_command(label="Redo", command=self.hello)
+        self.editmenu.add_separator()
+        self.editmenu.add_command(label="Copier", command=self.hello)
+        self.editmenu.add_command(label="Couper", command=self.hello)
+        self.editmenu.add_command(label="Coller", command=self.hello)
+        self.menubar.add_cascade(label="Edition", menu=self.editmenu)
+        
+        self.aidemenu = Menu(self.menubar, tearoff=0)
+        self.aidemenu.add_command(label="Read-Me 1", command=self.hello)
+        self.aidemenu.add_command(label="Read-Me 2", command=self.hello)
+        self.aidemenu.add_command(label="Read-Me 3", command=self.hello)
+        self.aidemenu.add_command(label="Read-Me 4", command=self.hello)
+        self.aidemenu.add_command(label="Read-Me 5", command=self.hello)
+        self.menubar.add_cascade(label="Aide", menu=self.aidemenu)
+        
+        self.menubar.add_command(label="Fermer", command=self.root.quit)
+        
+        self.menu = Menu(self.root, tearoff=0)
+        self.menu.add_command(label="Nom", command=self.hello)
+        self.menu.add_command(label="Verbe", command=self.hello)
+        
+        self.frame = Frame(self.root, width=512, height=512)
+        self.frame.pack()
+        self.frame.bind("<Button-3>", self.popup)
+        self.root.config(menu=self.menubar)
+    
+    def popup(self,event):
+        self.menu.post(event.x_root, event.y_root)
+    def hello(self):
+        pass
+    
     def creercadres(self):
         self.creercadresplash()
         self.creercadrecentral()
