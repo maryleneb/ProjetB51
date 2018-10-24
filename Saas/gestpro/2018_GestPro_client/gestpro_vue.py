@@ -85,9 +85,9 @@ class Vue():
         self.menu.add_command(label="Nom", command=self.hello)
         self.menu.add_command(label="Verbe", command=self.hello)
         
-        self.frame = Frame(self.root, width=512, height=512)
-        self.frame.pack()
-        self.frame.bind("<Button-3>", self.popup)
+        #self.frame = Frame(self.root, width=512, height=512)
+        #self.frame.pack()
+        #self.frame.bind("<Button-3>", self.popup)
         self.root.config(menu=self.menubar)
     
     def popup(self,event):
