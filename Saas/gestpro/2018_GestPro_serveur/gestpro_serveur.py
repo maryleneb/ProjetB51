@@ -11,6 +11,7 @@ import sys
 import socket
 import time
 import random
+from BaseDonnees import *
 
 
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -44,9 +45,13 @@ class ModeleService(object):
             
 class ControleurServeur(object):
     def __init__(self):
+        self.bd = BaseDonnees()
         rand=random.randrange(1000)+1000
         self.modele=ModeleService(self,rand)
-        
+     
+    def checkBase(self):
+        pass
+            
     def loginauserveur(self,nom):
         rep=self.modele.creerclient(nom)
         return rep
