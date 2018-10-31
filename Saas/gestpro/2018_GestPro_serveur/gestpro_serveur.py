@@ -31,7 +31,8 @@ class ModeleService(object):
         self.parent=parent
         self.rdseed=rdseed
         self.modulesdisponibles={"projet":"gp_projet",
-                                 "sql":"gp_sql",}
+                                 "sql":"gp_sql",
+                                 "base":"gp_base",}
         self.clients={}
         
     def creerclient(self,nom):

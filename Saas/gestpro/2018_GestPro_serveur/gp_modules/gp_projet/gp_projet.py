@@ -18,7 +18,6 @@ class Controleur():
         self.modele=None
         self.vue=Vue(self)
         self.vue.root.mainloop()
-        
-        
+s
 if __name__ == '__main__':
     c=Controleur()
