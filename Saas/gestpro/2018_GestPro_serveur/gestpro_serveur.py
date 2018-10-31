@@ -20,7 +20,7 @@ print("MON IP SERVEUR",monip)
 s.close()
 
 #daemon = Pyro4.core.Daemon(host=monip,port=9999) 
-daemon= SimpleXMLRPCServer((monip,9999))
+daemon= SimpleXMLRPCServer((monip,9999), logRequests = False)
 
 class Client(object):
     def __init__(self,nom):
@@ -32,7 +32,11 @@ class ModeleService(object):
         self.rdseed=rdseed
         self.modulesdisponibles={"projet":"gp_projet",
                                  "sql":"gp_sql",
+<<<<<<< HEAD
                                  "base":"gp_base",}
+=======
+                                 "inscription":"gp_inscription"}
+>>>>>>> 3bc540ca4818813c1d792f88a59149c16ba0dcaf
         self.clients={}
         
     def creerclient(self,nom):
