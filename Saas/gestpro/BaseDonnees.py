@@ -4,7 +4,7 @@ class  BaseDonnees():
     def __init__(self):
         self.connecteur = sqlite3.connect('SAAS.db')
         self.curseur = self.connecteur.cursor()
-        self.creerTables()
+        #self.creerTables()
         self.creerTablesPrototype()
         self.insertion()
         self.selection()
@@ -19,24 +19,33 @@ class  BaseDonnees():
         except:
             pass
         finally:
-            self.curseur.execute('''CREATE TABLE ''' +  listeTables[0] +''' ('''+listeTables[1][0]+listeTables[1][1]+
-                                 ''',''' +listeTables[2][0]+listeTables[2][1]+''',''' +listeTables[3][0]+listeTables[3][1]+''',''' 
-                                 +listeTables[4][0]+listeTables[4][1]+''',''' +listeTables[5][0]+listeTables[5][1]+''')''')
+            stringBD = '''CREATE TABLE ''' +  listeTables[0] +''' ('''+listeTables[1][0]+listeTables[1][1]+''',''' +listeTables[2][0]+listeTables[2][1]+''',''' +listeTables[3][0]+listeTables[3][1]+''',''' +listeTables[4][0]+listeTables[4][1]+''',''' +listeTables[5][0]+listeTables[5][1]+''')'''
+            self.curseur.execute(stringBD)
+    
     def creerTablesPrototype(self):
         listeTables = [ 
-            ['stocks', ['date','text'], ['trans','text'], ['symbol','text'], ['qty','real'], ['price','real']]
+            ['stocks', ['date','text'], ['trans','text'], ['symbol','text'], ['qty','real'], ['price','real']],
+            ['banane', ['date','text'], ['type','text'], ['symbol','text'], ['qty','real'], ['price','real']]
             ]
-        """
         try:
             self.curseur.execute("DROP TABLE stocks")
+            self.curseur.execute("DROP TABLE banane")
         except:
             pass
         finally:
-            self.curseur.execute('''CREATE TABLE ''' +  listeTables[0][0] +''' ('''+listeTables[0][1][0]+listeTables[0][1][1]+
-                                 ''',''' +listeTables[0][2][0]+listeTables[2][1]+''',''' +listeTables[0][3][0]+listeTables[0][3][1]+''',''' 
-                                 +listeTables[0][4][0]+listeTables[0][4][1]+''',''' +listeTables[0][5][0]+listeTables[0][5][1]+''')''')
-        """
-        print(listeTables)
+            for table in listeTables:
+                stringBD = "CREATE TABLE " + table[0] + "(" 
+                for indiceEntrees in range(len(table)):
+                    if indiceEntrees > 0:
+                        stringBD +=  table[indiceEntrees][0] + " " + table[indiceEntrees][1]
+                        if indiceEntrees < len(table)-1:
+                            stringBD += ", "
+                stringBD += ")"
+                self.curseur.execute(stringBD)
+                
+        
+   
+            
     def insertion(self):
         self.curseur.execute("INSERT INTO stocks VALUES('text1','text2', 'BMO', 50, 100)")
         
