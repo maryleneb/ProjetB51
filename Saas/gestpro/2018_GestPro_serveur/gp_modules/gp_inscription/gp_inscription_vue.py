@@ -21,11 +21,7 @@ class Vue():
         self.images={}
         self.cadreactif=None
         self.creercadres()
-        self.changecadre(self.cadrelogin)
-        
-        # -------------DM---------------- #
-        self.nomUtilisateur = None
-        # ------------------------------- #
+        self.changecadre(self.cadreinscription)
         
     def changemode(self,cadre):
         if self.modecourant:
@@ -44,34 +40,36 @@ class Vue():
     
         
     def creercadres(self):
-        self.creercadrelogin()
+        self.creercadreinscription()
         #self.cadrejeu=Frame(self.root,bg="blue")
         #self.modecourant=None
                 
-    def creercadrelogin(self):
-        self.cadrelogin=Frame(self.root)
-        self.canevalogin=Canvas(self.cadrelogin,width=640,height=480,bg="gray")
-        self.canevalogin.pack()
+    def creercadreinscription(self):
+        self.cadreinscription=Frame(self.root)
+        self.canevainscription=Canvas(self.cadreinscription,width=640,height=480,bg="gray")
+        self.canevainscription.pack()
         #self.orglogin=Entry(bg="white")
         #self.orglogin.insert(0, "CVM")
-        self.nomlogin=Entry(bg="white")
-        self.nomlogin.insert(0, "")
+        self.nominscription=Entry(bg="white")
+        self.nominscription.insert(0, "")
         btnconnecter=Button(text="Créer",bg="white",command=self.fetchNom)
         #self.canevalogin.create_window(200,200,window=self.orglogin,width=100,height=30)
-        self.canevalogin.create_window(200,300,window=self.nomlogin,width=100,height=30)
-        self.canevalogin.create_window(200,400,window=btnconnecter,width=100,height=30)
-    
-    '''    
-    def salutations(self):
-        print("HOURRA SA MARCHE")
-    '''    
+        self.canevainscription.create_window(200,300,window=self.nominscription,width=100,height=30)
+        self.canevainscription.create_window(200,400,window=btnconnecter,width=100,height=30)
     
     # ---------------DM----------------- #     
-    def fetchNom(self):                     # Méthode pour prendre le nom de l'utilisateur du textbox
-        temp = self.nomlogin.get()          # Prend le string de la textbox "self.nomlogin"
+    def fetchNom(self):                               # Méthode pour prendre le nom de l'utilisateur du textbox
+        username = self.nominscription.get()          # Prend le string de la textbox "self.nominscription"
         
-        if self.nomConforme(temp):
-            print("conforme")
+        if self.nomConforme(username):
+            if self.nomUnique(username):
+                f = open("inscriptionTest.txt", "a")            # Ouvre le fichier de noms d'utilisateur en mode "append"
+                f.write(username + "\n")                        # Si les tests sont True, inscrit le nouvel utilisateur dans le fichier
+                f.close()
+                print(username + " inscrit!")
+                
+            else:
+                print ("Nom d'utilisateur non disponible")
         
         else:
             print("Nom d'utilisateur invalide")
@@ -86,8 +84,18 @@ class Vue():
             else:
                 return False
             
-    def nomUnique(self, nom):               # Vérifie que le nom d'utilisateur n'existe pas déjà dans la BD
-        pass
+    def nomUnique(self, nom):                   # Vérifie que le nom d'utilisateur n'existe pas déjà dans la BD
+        f = open("inscriptionTest.txt", "r")    # Ouvre le fichier des nom d'utilisateurs en lecture
+        data = f.readlines()                    # Lit le fichier ligne par ligne
+        
+        for line in data:
+            n = line.rstrip('\n')               # Enlève les changement de ligne (\n) après chaque ligne
+            
+            if nom == n:                        # Compare les noms de la liste au nom d'utilisateur désiré
+                return False
+            
+        f.close()
+        return True                             # Si aucun match, le nom d'utilisateur est disponible
     # --------------------------------- #
         
     def fermerfenetre(self):
